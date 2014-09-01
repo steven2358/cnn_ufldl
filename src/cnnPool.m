@@ -9,27 +9,47 @@ function pooledFeatures = cnnPool(poolDim, convolvedFeatures)
 % Returns:
 %  pooledFeatures - matrix of pooled features in the form
 %                   pooledFeatures(featureNum, imageNum, poolRow, poolCol)
-%     
+%
 
 numImages = size(convolvedFeatures, 2);
 numFeatures = size(convolvedFeatures, 1);
 convolvedDim = size(convolvedFeatures, 3);
 
-pooledFeatures = zeros(numFeatures, numImages, floor(convolvedDim / poolDim), floor(convolvedDim / poolDim));
+resultDim = floor(convolvedDim / poolDim);
+
+pooledFeatures = zeros(numFeatures, numImages, resultDim, resultDim);
 
 % -------------------- YOUR CODE HERE --------------------
 % Instructions:
 %   Now pool the convolved features in regions of poolDim x poolDim,
-%   to obtain the 
-%   numFeatures x numImages x (convolvedDim/poolDim) x (convolvedDim/poolDim) 
+%   to obtain the
+%   numFeatures x numImages x (convolvedDim/poolDim) x (convolvedDim/poolDim)
 %   matrix pooledFeatures, such that
-%   pooledFeatures(featureNum, imageNum, poolRow, poolCol) is the 
+%   pooledFeatures(featureNum, imageNum, poolRow, poolCol) is the
 %   value of the featureNum feature for the imageNum image pooled over the
-%   corresponding (poolRow, poolCol) pooling region 
+%   corresponding (poolRow, poolCol) pooling region
 %   (see http://ufldl/wiki/index.php/Pooling )
-%   
+%
 %   Use mean pooling here.
 % -------------------- YOUR CODE HERE --------------------
 
+for imageNum = 1:numImages,
+    for featureNum = 1:numFeatures,
+        for poolRow = 1:resultDim,
+            rowst = (poolRow-1)*poolDim + 1;
+            rownd = rowst + poolDim - 1;
+            for poolCol = 1:resultDim,
+                colst = (poolCol-1)*poolDim + 1;
+                colnd = colst + poolDim - 1;
+                
+                patch = convolvedFeatures(featureNum,imageNum,...
+                    rowst:rownd,colst:colnd);
+                
+                pooledFeatures(featureNum, imageNum, poolRow, poolCol) = ...
+                    mean(patch(:));
+            end
+        end
+    end
 end
 
+end

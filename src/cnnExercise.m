@@ -68,7 +68,8 @@ displayColorNetwork( (W*ZCAWhite)');
 % Note that we have to preprocess the images in the exact same way 
 % we preprocessed the patches before we can obtain the feature activations.
 
-load stlTrainSubset.mat % loads numTrainImages, trainImages, trainLabels
+download_stl10_patches()
+load ../data/stlTrainSubset.mat % loads numTrainImages, trainImages, trainLabels
 
 %% Use only the first 8 images for testing
 convImages = trainImages(:, :, :, 1:8); 
