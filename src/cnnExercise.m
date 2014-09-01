@@ -149,11 +149,11 @@ end
 %  convolution and pooling 50 features at a time to avoid running out of
 %  memory. Reduce this number if necessary
 
-stepSize = 50;
+stepSize = 10;
 assert(mod(hiddenSize, stepSize) == 0, 'stepSize should divide hiddenSize');
 
-load stlTrainSubset.mat % loads numTrainImages, trainImages, trainLabels
-load stlTestSubset.mat  % loads numTestImages,  testImages,  testLabels
+load ../data/stlTrainSubset.mat % loads numTrainImages, trainImages, trainLabels
+load ../data/stlTestSubset.mat  % loads numTestImages,  testImages,  testLabels
 
 pooledFeaturesTrain = zeros(hiddenSize, numTrainImages, ...
     floor((imageDim - patchDim + 1) / poolDim), ...
@@ -193,7 +193,7 @@ for convPart = 1:(hiddenSize / stepSize)
 end
 
 
-% You might want to save the pooled features since convolution and pooling takes a long time
+% You might want to save the pooled features since convolution and pooling take a long time
 save('cnnPooledFeatures.mat', 'pooledFeaturesTrain', 'pooledFeaturesTest');
 toc();
 
