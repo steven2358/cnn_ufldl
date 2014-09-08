@@ -194,7 +194,7 @@ end
 
 
 % You might want to save the pooled features since convolution and pooling take a long time
-save('cnnPooledFeatures.mat', 'pooledFeaturesTrain', 'pooledFeaturesTest');
+% save('cnnPooledFeatures.mat', 'pooledFeaturesTrain', 'pooledFeaturesTest');
 toc();
 
 %%======================================================================
